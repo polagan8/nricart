@@ -30,6 +30,8 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
   'use strict';
   if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  document.documentElement.classList.add('motion-ready');
+
   const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
   const lerp=(a,b,t)=>a+(b-a)*t;
 
@@ -69,68 +71,23 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
 
   revealItems.forEach(el=>revealObserver.observe(el));
 
-  /* Diagonal pickle journey — vertical scroll drives alternating diagonal card motion. */
-  const journey=document.querySelector('.journey');
-  const pin=document.querySelector('.journey-pin');
-  const track=document.querySelector('.journey-track');
+  /* Pickle Journey — simple editorial mask reveal, no scroll hijacking. */
   const journeyCards=[...document.querySelectorAll('.journey .flavour-card')];
 
-  function measureJourney(){
-    if(!journey)return;
-    journey.style.minHeight='';
-    if(pin){pin.style.position='';pin.style.top='';}
-    if(track)track.style.transform='';
-  }
+  journeyCards.forEach((card,index)=>{
+    const copy=card.querySelector('.flavour-copy');
+    if(copy) copy.dataset.index=String(index+1).padStart(2,'0');
+  });
 
-  let targetScroll=scrollY;
-  let currentScroll=scrollY;
-  let ticking=false;
+  const journeyObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      entry.target.classList.add('is-inview');
+      journeyObserver.unobserve(entry.target);
+    });
+  },{threshold:.12,rootMargin:'0px 0px -5% 0px'});
 
-  function requestMotion(){
-    targetScroll=scrollY;
-    if(!ticking){ticking=true;requestAnimationFrame(updateMotion);}
-  }
-
-  function updateMotion(){
-    currentScroll=lerp(currentScroll,targetScroll,.14);
-    const hero=document.querySelector('.hero');
-    const progress=document.querySelector('.hero-progress span');
-    if(hero){
-      const rect=hero.getBoundingClientRect();
-      const p=clamp(-rect.top/Math.max(1,rect.height),0,1);
-      if(heroProduct) heroProduct.style.transform=`translate3d(0,${p*-170}px,0) scale(${1+p*.13}) rotate(${p*-4.5}deg)`;
-      if(heroCopy){heroCopy.style.transform=`translate3d(0,${p*-90}px,0)`;heroCopy.style.opacity=String(1-p*.42);}
-      rings.forEach((ring,i)=>{const rotation=i===1?p*78:-p*48;const scale=i===1?1+p*.16:1-p*.08;ring.style.transform=`rotate(${rotation}deg) scale(${scale})`;});
-      ingredients.forEach((el,i)=>{const moves=[[30,-30],[-25,20],[-15,-18]][i]||[0,0];el.style.transform=`translate3d(${p*moves[0]}px,${p*moves[1]}px,0)`;});
-      heroSides.forEach((el,i)=>{const dir=i===0?-1:1;const base=i===0?'rotate(-8deg)':'rotate(8deg)';el.style.transform=`${base} translate3d(${dir*p*78}px,${-p*82}px,0) scale(${1+p*.035})`;});
-      if(progress)progress.style.transform=`scaleX(${1+p*6})`;
-    }
-
-    if(journey && innerWidth>700){
-      const r=journey.getBoundingClientRect();
-      const raw=clamp((innerHeight-r.top)/(innerHeight+r.height*.72),0,1);
-      journeyCards.forEach((card,i)=>{
-        const local=clamp(raw*1.55-i*.105,0,1);
-        const dir=i%2===0?-1:1;
-        const x=dir*(1-local)*115;
-        const y=(1-local)*(90+i*8);
-        const rot=dir*(1-local)*5.5;
-        card.style.transform=`translate3d(${x}px,${y}px,0) rotate(${rot}deg) scale(${.90+local*.10})`;
-        card.style.opacity=String(.18+local*.82);
-      });
-      journey.style.setProperty('--journey-progress',String(Math.max(.12,raw)));
-    } else {
-      journeyCards.forEach(card=>{card.style.transform='';card.style.opacity='';});
-    }
-
-    ticking=false;
-    if(Math.abs(currentScroll-targetScroll)>.2){ticking=true;requestAnimationFrame(updateMotion);}
-  }
-
-  addEventListener('scroll',requestMotion,{passive:true});
-
-  const scrollExplore=document.getElementById('scrollExplore');
-  if(scrollExplore) scrollExplore.addEventListener('click',()=>document.querySelector('.categories')?.scrollIntoView({behavior:'smooth',block:'start'}));
+  journeyCards.forEach(card=>journeyObserver.observe(card));
 
   /* World map depth */
   const worldMap=document.querySelector('.world-map');

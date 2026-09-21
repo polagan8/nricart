@@ -246,11 +246,12 @@ body{
 .flavour-card img{
   width:100%!important;height:310px!important;object-fit:cover!important;
   border-radius:6px!important;transform:none!important;
-  clip-path:inset(0 100% 0 0 round 6px);
+  clip-path:inset(0 0 0 0 round 6px);
   transition:clip-path 1.05s cubic-bezier(.2,.75,.2,1),transform 1.2s cubic-bezier(.2,.75,.2,1)!important;
 }
-.flavour-card:nth-child(even) img{clip-path:inset(0 0 0 100% round 6px)}
-.flavour-card.is-inview img{clip-path:inset(0 0 0 0 round 6px)}
+.motion-ready .flavour-card img{clip-path:inset(0 100% 0 0 round 6px)}
+.motion-ready .flavour-card:nth-child(even) img{clip-path:inset(0 0 0 100% round 6px)}
+.motion-ready .flavour-card.is-inview img{clip-path:inset(0 0 0 0 round 6px)}
 .flavour-card.is-inview:hover img{transform:scale(1.015)!important}
 .flavour-copy{position:relative!important;inset:auto!important;padding:0!important;background:none!important}
 .flavour-copy:before{
