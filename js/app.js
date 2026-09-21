@@ -145,7 +145,6 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
   function refreshMotion(){
 
     updateMap();
-    requestMotion();
   }
 
   addEventListener('resize',refreshMotion,{passive:true});
@@ -187,22 +186,6 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
   addEventListener('scroll', updateProgress, {passive:true});
   addEventListener('resize', updateProgress, {passive:true});
   updateProgress();
-
-  // Very restrained pointer depth on the main hero product only.
-  const hero = document.querySelector('.hero');
-  const product = document.querySelector('.hero-product');
-  if (!reduced && hero && product && matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    hero.addEventListener('pointermove', e => {
-      const r = hero.getBoundingClientRect();
-      const x = ((e.clientX-r.left)/r.width-.5);
-      const y = ((e.clientY-r.top)/r.height-.5);
-      product.style.transform =
-        `perspective(1000px) translate3d(${x*10}px,${y*7}px,18px) rotateY(${x*3}deg) rotateX(${-y*2}deg)`;
-    });
-    hero.addEventListener('pointerleave', () => {
-      product.style.transform = '';
-    });
-  }
 })();
 
 /* Semantic UI bindings kept separate from markup. */
@@ -227,51 +210,36 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
 })();
 
 
-/* Hero cinematic entrance + pointer depth. Kept independent from journey effects. */
+
+
+/* Interactive hero light: isolated from the original entrance/parallax transforms. */
 (() => {
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hero = document.querySelector('.hero');
-  const visual = document.querySelector('.hero-visual');
-  const main = document.querySelector('.hero-product');
-  const sides = [...document.querySelectorAll('.hero-side')];
-  const overlay = document.querySelector('.hero-depth-overlay');
-  if (!hero || !visual || !main || reduced) return;
-
-  // Restore the opening composition with Web Animations API so it doesn't depend on GSAP.
-  main.animate(
-    [{opacity:0,transform:'translate3d(0,70px,0) scale(.92) rotateY(-8deg)'},
-     {opacity:1,transform:'translate3d(0,0,0) scale(1) rotateY(0deg)'}],
-    {duration:1050,easing:'cubic-bezier(.16,.8,.25,1)',fill:'both'}
-  );
-  sides.forEach((el,i)=>el.animate(
-    [{opacity:0,transform:`translate3d(${i ? 55 : -55}px,45px,-20px) rotateZ(${i ? 7 : -7}deg) scale(.94)`},
-     {opacity:1,transform:'translate3d(0,0,0) rotateZ(0deg) scale(1)'}],
-    {duration:900,delay:180+i*100,easing:'cubic-bezier(.16,.8,.25,1)',fill:'both'}
-  ));
-
+  const product = document.querySelector('.hero-product');
+  if (!product) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
 
-  let raf=0, tx=0, ty=0;
-  const render=()=>{
-    raf=0;
-    main.style.transform=`translate3d(${tx*12}px,${ty*8}px,34px) rotateY(${tx*5}deg) rotateX(${-ty*4}deg)`;
-    sides.forEach((el,i)=>{
-      const d=i?1:-1;
-      el.style.transform=`translate3d(${tx*(18+8*i)}px,${ty*(12+5*i)}px,${-8+10*i}px) rotateY(${tx*7}deg) rotateZ(${d*tx*2}deg)`;
-    });
-    if(overlay){
-      overlay.style.setProperty('--mx',`${50+tx*32}%`);
-      overlay.style.setProperty('--my',`${46+ty*28}%`);
-    }
+  let frame = 0;
+  let px = .5, py = .42;
+
+  const paint = () => {
+    frame = 0;
+    product.style.setProperty('--hx', `${(px * 100).toFixed(2)}%`);
+    product.style.setProperty('--hy', `${(py * 100).toFixed(2)}%`);
+    product.style.setProperty('--tilt-x', `${((.5-py)*5).toFixed(2)}deg`);
+    product.style.setProperty('--tilt-y', `${((px-.5)*6).toFixed(2)}deg`);
   };
-  visual.addEventListener('pointermove',e=>{
-    const r=visual.getBoundingClientRect();
-    tx=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2));
-    ty=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height-.5)*2));
-    if(!raf) raf=requestAnimationFrame(render);
+
+  product.addEventListener('pointerenter', () => product.classList.add('hero-light-active'));
+  product.addEventListener('pointermove', event => {
+    const rect = product.getBoundingClientRect();
+    px = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    py = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+    if (!frame) frame = requestAnimationFrame(paint);
   });
-  visual.addEventListener('pointerleave',()=>{
-    tx=ty=0;
-    if(!raf) raf=requestAnimationFrame(render);
+  product.addEventListener('pointerleave', () => {
+    product.classList.remove('hero-light-active');
+    px=.5; py=.42;
+    if (!frame) frame=requestAnimationFrame(paint);
   });
 })();
