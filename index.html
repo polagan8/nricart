@@ -48,8 +48,8 @@ main{padding-top:117px}
 .strip{background:var(--green);color:#fff}.strip-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:19px 0}.strip-item{text-align:center;border-right:1px solid #ffffff22;font-size:11px}.strip-item:last-child{border:0}.strip-item i{display:block;font-size:17px;margin-bottom:5px;color:#f5c89d}
 section{padding:88px 0}.heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:30px;gap:20px}.heading h2{font-family:"Playfair Display",serif;font-size:42px;letter-spacing:-1.3px}.heading p{color:var(--muted);font-size:13px}.link{font-size:12px;font-weight:800;color:var(--saffron)}
 .categories{background:var(--paper)}.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}.cat{aspect-ratio:3/2;min-height:0;border-radius:25px;overflow:hidden;position:relative;color:#fff;background:#6d4328}.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .8s cubic-bezier(.2,.8,.2,1)}.cat:hover img{transform:scale(1.045)}.cat:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#000b)}.cat-content{position:absolute;z-index:2;left:25px;right:20px;bottom:23px}.cat-content small{font-size:10px;text-transform:uppercase;letter-spacing:.13em}.cat-content h3{font-family:"Playfair Display",serif;font-size:30px;margin-top:2px}.cat:nth-child(2),.cat:nth-child(3){height:auto}
-.journey{background:#201510;color:#fff;padding:0;overflow:visible;position:relative}.journey-wrap{min-height:100vh;display:block}.journey-pin{width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.journey-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:34px}.journey-head .eyebrow{color:#f0c19b}.journey-head h2{font-family:"Playfair Display",serif;font-size:46px;line-height:1}.journey-head p{max-width:330px;color:#c7b9b0;font-size:13px}
-.journey-track{display:flex;gap:22px;width:max-content;padding-right:8vw}.flavour-card{width:min(30vw,365px);height:510px;border-radius:24px;overflow:hidden;position:relative;background:#5d3a25;flex:0 0 auto}.flavour-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s}.flavour-card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 42%,rgba(0,0,0,.78))}.flavour-card:hover img{transform:scale(1.045)}.flavour-copy{position:absolute;z-index:2;left:22px;right:22px;bottom:21px}.flavour-copy span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#efc49f}.flavour-copy h3{font-family:"Playfair Display",serif;font-size:31px;margin:4px 0}.flavour-copy p{font-size:11px;color:#e4d8d1}.journey-footer{display:flex;justify-content:space-between;align-items:center;margin-top:26px;color:#9e9088;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.journey-line{width:260px;height:2px;background:#ffffff22;position:relative;border-radius:999px;overflow:hidden}.journey-line:after{content:"";position:absolute;left:0;top:0;width:100%;height:100%;background:var(--saffron);transform-origin:left center;transform:scaleX(var(--journey-progress,.12));transition:transform .12s linear}.journey-progress{display:block;width:100%;height:100%}
+.journey{background:#201510;color:#fff;padding:0;overflow:visible;position:relative}.journey-wrap{min-height:100vh;display:block}.journey-pin{position:sticky;top:0;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.journey-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:34px}.journey-head .eyebrow{color:#f0c19b}.journey-head h2{font-family:"Playfair Display",serif;font-size:46px;line-height:1}.journey-head p{max-width:330px;color:#c7b9b0;font-size:13px}
+.journey-track{display:flex;gap:22px;width:max-content;padding-right:max(8vw,40px);transform:translate3d(0,0,0);will-change:transform}.flavour-card{width:min(30vw,365px);height:510px;border-radius:24px;overflow:hidden;position:relative;background:#5d3a25;flex:0 0 auto}.flavour-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s}.flavour-card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 42%,rgba(0,0,0,.78))}.flavour-card:hover img{transform:scale(1.045)}.flavour-copy{position:absolute;z-index:2;left:22px;right:22px;bottom:21px}.flavour-copy span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#efc49f}.flavour-copy h3{font-family:"Playfair Display",serif;font-size:31px;margin:4px 0}.flavour-copy p{font-size:11px;color:#e4d8d1}.journey-footer{display:flex;justify-content:space-between;align-items:center;margin-top:26px;color:#9e9088;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.journey-line{width:260px;height:2px;background:#ffffff22;position:relative;border-radius:999px;overflow:hidden}.journey-line:after{content:"";position:absolute;left:0;top:0;width:100%;height:100%;background:var(--saffron);transform-origin:left center;transform:scaleX(var(--journey-progress,.12));transition:transform .12s linear}.journey-progress{display:block;width:100%;height:100%}
 .products{background:var(--cream)}.tabs{display:flex;gap:8px;margin-bottom:26px}.tab{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 15px;font-size:11px;font-weight:700;cursor:pointer}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.3s;position:relative}.product:hover{transform:translateY(-6px);box-shadow:var(--shadow)}.p-img{height:235px;background:#f5eee5;position:relative;overflow:hidden}.p-img img{width:100%;height:100%;object-fit:cover;transition:.5s}.product:hover .p-img img{transform:scale(1.05)}.sale{position:absolute;left:12px;top:12px;background:var(--saffron);color:#fff;border-radius:99px;padding:5px 9px;font-size:10px;font-weight:800}.quick{position:absolute;right:12px;top:12px;width:34px;height:34px;border:0;border-radius:50%;background:#fff;cursor:pointer}.p-body{padding:16px}.p-cat{text-transform:uppercase;font-size:10px;letter-spacing:.1em;color:var(--muted)}.p-title{font-weight:800;margin:6px 0 11px;font-size:15px}.rating{font-size:11px;color:#b76b24}.rating span{color:var(--muted);margin-left:5px}.price{display:flex;justify-content:space-between;align-items:center;margin-top:14px}.price strong{font-size:18px}.old{text-decoration:line-through;color:#a69b92;font-size:12px;margin-left:5px}.add{border:0;background:var(--green);color:#fff;border-radius:10px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer}
 .story{background:#f1e7d9}.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}.story-photo{height:500px;border-radius:30px;overflow:hidden;position:relative}.story-photo img{width:100%;height:100%;object-fit:cover}.story-photo:after{content:"";position:absolute;inset:14px;border:1px solid #ffffff44;border-radius:22px}.story-copy h2{font-family:"Playfair Display",serif;font-size:48px;line-height:1.03;margin:9px 0 18px}.story-copy p{color:var(--muted);font-size:15px;max-width:500px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:25px 0}.checks div{font-size:12px;font-weight:700;display:flex;gap:8px}.checks i{color:var(--green)}
@@ -269,19 +269,23 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
       journeyEnabled=false;
       if(track)track.style.transform='';
       if(pin)pin.style.position='';
-      if(journey)journey.style.minHeight='';
+      if(journey){journey.style.minHeight='';journey.style.height='';}
       return;
     }
 
     journeyEnabled=true;
-    const viewportWidth=Math.min(innerWidth,1180);
-    journeyDistance=Math.max(0,track.scrollWidth-viewportWidth);
-    journeyRange=Math.max(1100,journeyDistance+650);
+    // The visible track width is the pin/container width, not the browser width.
+    // Measuring the actual viewport prevents the final cards from being stranded off-screen.
+    const visibleWidth=pin.clientWidth;
+    journeyDistance=Math.max(0,track.scrollWidth-visibleWidth);
+    // Give vertical scrolling a 1:1-ish relationship with horizontal travel.
+    journeyRange=Math.max(innerHeight*.9,journeyDistance+innerHeight*.28);
 
     pin.style.position='sticky';
     pin.style.top='0px';
-    journey.style.minHeight=`calc(100vh + ${journeyRange}px)`;
-    journeyStart=scrollY+journey.getBoundingClientRect().top;
+    journey.style.height=`calc(100vh + ${journeyRange}px)`;
+    journey.style.minHeight='';
+    journeyStart=journey.getBoundingClientRect().top+scrollY;
   }
 
   /* One native requestAnimationFrame loop handles all scroll-linked motion. */
@@ -336,10 +340,13 @@ load().catch(()=>{allProducts=fallback;render(allProducts)});
     }
 
     if(journeyEnabled&&journey&&track){
-      const p=clamp((currentScroll-journeyStart)/journeyRange,0,1);
-      track.style.transform=`translate3d(${-journeyDistance*p}px,0,0)`;
-      const line=journey.querySelector('.journey-line:after');
-      journey.style.setProperty('--journey-progress', `${p}`);
+      // Use the actual sticky section geometry every frame. This remains correct after
+      // fonts/images/layout changes and avoids the old "Keep scrolling but nothing moves" bug.
+      const rect=journey.getBoundingClientRect();
+      const maxScroll=Math.max(1,journey.offsetHeight-innerHeight);
+      const p=clamp((-rect.top)/maxScroll,0,1);
+      track.style.transform=`translate3d(${Math.round(-journeyDistance*p)}px,0,0)`;
+      journey.style.setProperty('--journey-progress', `${Math.max(.12,p)}`);
       const progressBar=journey.querySelector('.journey-progress');
       if(progressBar) progressBar.style.transform=`scaleX(${Math.max(.12,p)})`;
     }
