@@ -284,3 +284,36 @@ body{
 @media(prefers-reduced-motion:reduce){
   .flavour-card img{clip-path:inset(0)!important;transition:none!important}
 }
+
+
+/* === Hero cinematic motion restored + interactive depth overlay === */
+.hero{position:relative;isolation:isolate;perspective:1200px}
+.hero-visual{position:relative;transform-style:preserve-3d;will-change:transform}
+.hero-product,.hero-side{will-change:transform;transform-style:preserve-3d}
+.hero-depth-overlay{
+  position:absolute;inset:5% 4%;z-index:6;pointer-events:none;border-radius:50%;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,42%),
+      rgba(255,220,155,.22) 0,
+      rgba(231,101,50,.08) 19%,
+      rgba(36,75,55,.055) 42%,
+      transparent 67%);
+  mix-blend-mode:screen;
+  opacity:.72;
+  transform:translateZ(34px);
+  transition:opacity .35s ease;
+}
+.hero-depth-ring{
+  position:absolute;left:50%;top:50%;z-index:1;width:min(39vw,540px);aspect-ratio:1;
+  border:1px solid rgba(231,101,50,.18);border-radius:50%;
+  transform:translate(-50%,-50%) translateZ(-20px);
+  box-shadow:0 0 0 38px rgba(231,101,50,.025),0 0 0 86px rgba(36,75,55,.025);
+  pointer-events:none;
+}
+@media(max-width:800px){
+  .hero-depth-overlay{inset:18% 0 2%}
+  .hero-depth-ring{width:72vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-depth-overlay,.hero-depth-ring{display:none}
+}
